@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Main {
     public static void lerArquivos(String caminho) {
-        List<String> numeros = FileHander.readNamesFromFile(caminho);
+        List<String> numeros = FileHander.readFromFile(caminho);
 
         if (numeros.isEmpty()) {
             System.err.println("Nenhum nome foi lido do arquivo. Verifique o caminho ou conteúdo do arquivo.");

@@ -6,21 +6,20 @@ import java.util.List;
 
 public class FileHander {
 
-    public static List<String> readNamesFromFile(String filePath) {
-        List<String> names = new ArrayList<>();
+    public static List<String> readFromFile(String filePath) {
+        List<String> lista = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String trimmedLine = line.trim();
                 if (!trimmedLine.isEmpty()) {
-                    names.add(trimmedLine);
+                    lista.add(trimmedLine);
                 }
             }
         } catch (IOException e) {
             System.err.println("Erro ao ler o arquivo " + filePath + ": " + e.getMessage());
-            e.printStackTrace();
         }
-        return names;
+        return lista;
     }
 
     public static void printDistribution(int[] distribution) {
