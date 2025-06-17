@@ -6,25 +6,43 @@ import java.util.List;
 
 public class FileHander {
 
-    public static List<String> readFromFile(String filePath) {
-        List<String> lista = new ArrayList<>();
+    public static List<Integer> readFromFile(String filePath) {
+        List<Integer> numeros = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+
             String line;
+            boolean isFirstLine = true;
+
             while ((line = br.readLine()) != null) {
                 String trimmedLine = line.trim();
+
                 if (!trimmedLine.isEmpty()) {
-                    lista.add(trimmedLine);
+                    continue;
+                }
+
+                if (isFirstLine && !isNumeric(trimmedLine)) {
+                    isFirstLine = false;
+                    continue;
+                }
+
+                try {
+                    numeros.add(Integer.parseInt(trimmedLine));
+                } catch (NumberFormatException e) {
+                    System.err.println("Valor não numérico ignorado: " + trimmedLine);
                 }
             }
         } catch (IOException e) {
             System.err.println("Erro ao ler o arquivo " + filePath + ": " + e.getMessage());
         }
-        return lista;
+        return numeros;
     }
 
-    public static void printDistribution(int[] distribution) {
-        for (int i = 0; i < distribution.length; i++) {
-            System.out.printf("  Slot %d: %d chaves%n", i, distribution[i]);
+    private static boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 }

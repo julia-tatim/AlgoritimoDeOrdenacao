@@ -1,18 +1,37 @@
 import java.util.List;
 
 public class Main {
-    public static void lerArquivos(String caminho) {
-        List<String> numeros = FileHander.readFromFile(caminho);
-
-        if (numeros.isEmpty()) {
-            System.err.println("Nenhum nome foi lido do arquivo. Verifique o caminho ou conteúdo do arquivo.");
-        } else {
-            System.out.println("Total de " + numeros.size() + " numeros lidos do arquivo.");
-        }
-    }
     public static void main(String[] args) {
-        System.out.println("Inicializando programa");
+        System.out.println("Análise de Algoritmos de Ordenação!");
 
-        lerArquivos("caminho/do/arquivo.txt");
+        String[] testFiles = {
+                "src/csv/aleatorio_100.csv",
+                "src/csv/aleatorio_1000.csv",
+                "src/csv/aleatorio_10000.csv",
+                "src/csv/crescente_100.csv",
+                "src/csv/crescente_1000.csv",
+                "src/csv/crescente_10000.csv",
+                "src/csv/decrescente_100.csv",
+                "src/csv/decrescente_1000.csv",
+                "src/csv/decrescente_10000.csv"
+        };
+
+        SortAlgorithm[] algorithms = {
+                new BubbleSort(),
+                new InsertionSort(),
+                new QuickSort()
+        };
+
+        for (String file: testFiles) {
+            System.out.println("\n Processando: " + file);
+
+            List<Integer> integerData = FileHander.readFromFile(file);
+
+            int[] data = integerData.stream().mapToInt(i -> i).toArray();
+
+            for (SortAlgorithm algorithm : algorithms) {
+                SortTester.testAlgorithm(algorithm, data);
+            }
+        }
     }
 }
